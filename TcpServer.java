@@ -11,16 +11,24 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javafx.scene.control.skin.SplitPaneSkin;
+
+
 public class TcpServer {
 	public static void main(String[] args) throws Exception {
 		
 		final int SERVER_PORT=8766;
 		String clientMsg = "";
+		String serverMsg= "";
+		String luce="";
+		
+
 		
 		try {			 
 			// Creazione del socket sul server e ascolto sulla porta
 			ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
 			System.out.println("Server: in ascolto sulla porta " + SERVER_PORT);
+			
 
 			boolean endConn=false;
 			while(!endConn) {
@@ -35,18 +43,28 @@ public class TcpServer {
 				// ---------------------------------------------------------
 				//Lettura dati dal client un righa alla volta   
 				while ((clientMsg=inStream.readLine()).length() != 0) {
-					System.out.println(clientMsg);	
+					System.out.println(clientMsg);
+					if (clientMsg.contains("accendi"))
+						luce="la luce è accesa capo";
+					else if(clientMsg.contains("spegni"))
+						luce="non vedo niente, è tutto buio";
+					//else 
+					//	luce="non è stato trovato il comando";
+
+
+
+
 				}  
 				// Elaborare qui i dati ricevuti dal client 
-				// ---------------------------------------------------------
+				
 
 				//Invio dei dati su stream di rete al client
-				clientMsg = "HTTP/1.1 200 OK\r\n";
+				serverMsg = "HTTP/1.1 200 OK\r\n";
 				//clientMsg += "Connection: close\r\n";
 				//clientMsg += "Content-Type: text/plain\r\n";
-				clientMsg += "\r\n";
-				clientMsg += "Un saluto Signori belli da il Mattia";
-				outStream.write(clientMsg.getBytes());
+				serverMsg += "\r\n";
+				serverMsg += luce;
+				outStream.write(serverMsg.getBytes());
 				outStream.flush();
 
 				System.out.println("\n....................... Fine ricezione dati\n");
