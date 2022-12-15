@@ -39,7 +39,7 @@ public class TcpServer {
 				// Create output stream to write data and input stream to read data from socket
 				DataOutputStream outStream = new DataOutputStream(clientSocket.getOutputStream());	
 				BufferedReader inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-	
+				luce="non è stato trovato il comando";
 				// ---------------------------------------------------------
 				//Lettura dati dal client un righa alla volta   
 				while ((clientMsg=inStream.readLine()).length() != 0) {
